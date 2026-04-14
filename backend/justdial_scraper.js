@@ -81,9 +81,36 @@ async function scrapeJustdial(city, niche) {
     const count = db.prepare(`SELECT count(*) as c FROM leads WHERE source LIKE 'Justdial%' AND category = ?`).get(niche).c;
     if (count === 0) {
       console.log("No leads secured from Justdial (BOT block or error). Inserting JD Demo mocks with Deep Social.");
+      // Generate realistic looking Indian phone numbers and names to demonstrate the UI
+      const mockPhone1 = "+91 98" + Math.floor(10000000 + Math.random() * 90000000);
+      const mockPhone2 = "+91 88" + Math.floor(10000000 + Math.random() * 90000000);
+      
+      const cleanNiche = niche.replace(/\s+/g, '').toLowerCase();
+      const cleanCity = city.split(',')[0].replace(/\s+/g, '').toLowerCase();
+
       const mockLeads = [
-        {name: "JD Premium " + niche, phone: "(281) 555-JD11", category: niche, website: "https://facebook.com/jdpremium", score: 90, city, source: "Justdial (Demo Mock)", email: "contact@jdpremium.com", social_profiles: '["https://facebook.com/jdpremium"]'},
-        {name: "Citywide " + niche + " Pro", phone: "(281) 555-JD22", category: niche, website: "", score: 70, city, source: "Justdial (Demo Mock)", email: "", social_profiles: "[]"}
+        {
+          name: `Sri Sai ${niche} Services`, 
+          phone: mockPhone1, 
+          category: niche, 
+          website: `https://facebook.com/srisai${cleanNiche}`, 
+          score: 90, 
+          city, 
+          source: "Justdial (Demo Mock)", 
+          email: `contact@srisai${cleanNiche}.in`, 
+          social_profiles: `["https://instagram.com/srisai_${cleanNiche}", "https://facebook.com/srisai${cleanNiche}"]`
+        },
+        {
+          name: `Royal ${niche} ${city.split(',')[0]}`, 
+          phone: mockPhone2, 
+          category: niche, 
+          website: "", 
+          score: 70, 
+          city, 
+          source: "Justdial (Demo Mock)", 
+          email: "", 
+          social_profiles: "[]"
+        }
       ];
       for (const lead of mockLeads) {
         const stmt = db.prepare(`
