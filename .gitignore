@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+
+# Backend
+backend/node_modules/
+backend/leads.db
+backend/leads.db-wal
+backend/leads.db-shm
+backend/*.csv
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
